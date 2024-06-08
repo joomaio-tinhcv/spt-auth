@@ -1,14 +1,23 @@
 # spt-auth
 Thực nghiệm với authentication với 2 trường hợp login với session và với token
 1. Login session bằng username và password
+
 Trường hợp login success:
+
 endpoint: http://localhost/login
+
 username: admin
+
 password: 123123
+
 Trường hợp login failed:
+
 endpoint: http://localhost/login
+
 username: admin
+
 password: 123456
+
 2. Login token bằng access_token với api
 API lấy danh sách users
     Trường hợp request accept:
