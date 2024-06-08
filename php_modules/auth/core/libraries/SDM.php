@@ -22,7 +22,7 @@ use SPT\Session\PhpSession;
 use SPT\Session\DatabaseSession;
 use SPT\Session\DatabaseSessionEntity;
 use SPT\User\Instance as UserInstance;
-use SPT\User\SPT\User as UserAdapter;
+use App\auth\user\libraries\User as UserAdapter;
 use App\auth\user\entities\UserEntity;
 
 use SPT\Application\Web as Base;

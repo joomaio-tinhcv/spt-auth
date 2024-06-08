@@ -47,6 +47,10 @@ class UserEntity extends Entity
                 'status' => [
                     'type' => 'tinyint',
                 ],
+                'access_token' => [
+                    'type' => 'varchar',
+                    'limit' => 255,
+                ],
                 'created_at' => [
                     'type' => 'datetime',
                     'null' => 'YES',
