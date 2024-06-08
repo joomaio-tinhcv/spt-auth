@@ -38,9 +38,7 @@ class Permission
                 }
             }
             
-            $app->redirect(
-                $app->getRouter()->url('')
-            );
+            $app->raiseError('You do not have access', 403);
         } 
 
         $app->redirect(

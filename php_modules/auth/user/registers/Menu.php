@@ -11,10 +11,10 @@ class Menu
         $container = $app->getContainer();
         $router = $container->get('router');
         $path_current = $router->get('actualPath');
-        $permission = $container->exists('PermissionModel') ? $container->get('PermissionModel') : null;
+        $permission = $container->exists('permission') ? $container->get('permission') : null;
 
-        $allow_user = $permission ? $permission->checkPermission(['user_manager', 'user_read']) : true;
-        $allow_usergroup = $permission ? $permission->checkPermission(['usergroup_manager', 'usergroup_read']) : true;
+        $allow_user = $permission ? $permission->can('access_key', ['user_manager', 'user_read']) : true;
+        $allow_usergroup = $permission ? $permission->can('access_key', ['usergroup_manager', 'usergroup_read']) : true;
         
         $menu_user = [];
         if ($allow_user || $allow_usergroup)
