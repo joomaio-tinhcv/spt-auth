@@ -12,6 +12,7 @@ class User extends UserBase
 {
     protected $guard_active;
     protected $guards;
+    protected $gates;
 
     public function init(array $options)
     {
@@ -93,5 +94,32 @@ class User extends UserBase
         $try = $guard ? $guard->logout() : parent::logout();
         
         return ;
+    }
+
+    public function can(string $gate, ... $params)
+    {
+        if(!isset($this->gates[$gate]))
+        {
+            return false;
+        }
+
+        $config = $this->gates[$gate];
+
+        return true;
+    }
+
+    public function registerGates(string $gate, string $class, string $fnc)
+    {
+        if(is_null($this->gates))
+        {
+            $this->gates = [];
+        }
+
+        $this->gates[$gate] = [
+            'class' => $class,
+            'fnc' => $fnc,
+        ];
+
+        return true;
     }
 }

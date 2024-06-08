@@ -17,27 +17,27 @@ class Permission
     public static function CheckSession(IApp $app)
     {
         $user = $app->getContainer()->get('user');
-        $permission = $app->getContainer()->get('PermissionModel');
+        $permission = $app->getContainer()->get('permission');
 
         if( is_object($user) && $user->get('id') )
         {
-            $allow = $permission->checkPermission();
-            if ($allow)
+            $request_permission = $app->get('permission', []);
+            if(!$request_permission)
             {
                 return true;
             }
 
-            // check permission by object
-            $permissionObject = $app->get('permission_object', []);
-            if ($permissionObject)
+            $method = $app->getContainer()->get('request')->header->getRequestMethod();
+            foreach($request_permission as $gate => $params)
             {
-                $allow_object = $permission->checkPermissionObject($permissionObject[0], $permissionObject[1], $permissionObject[2]);
-                if ($allow_object)
+                $param = is_array($params) ? $params[$method] : $params;
+                $try = $permission->can($gate, $param);
+                if($try)
                 {
                     return true;
                 }
             }
-
+            
             $app->redirect(
                 $app->getRouter()->url('')
             );
