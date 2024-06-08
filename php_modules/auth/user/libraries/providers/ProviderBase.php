@@ -1,6 +1,6 @@
 <?php
 
-namespace DTM\user\libraries\providers;
+namespace App\auth\user\libraries\providers;
 
 interface ProviderBase
 {

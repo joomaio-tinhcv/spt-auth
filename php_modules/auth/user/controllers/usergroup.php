@@ -1,4 +1,4 @@
-<?php namespace DTM\user\controllers;
+<?php namespace App\auth\user\controllers;
 
 use SPT\Response;
 use SPT\Web\ControllerMVVM;

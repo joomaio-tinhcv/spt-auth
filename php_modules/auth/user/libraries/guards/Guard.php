@@ -1,6 +1,6 @@
 <?php
 
-namespace DTM\user\libraries\guards;
+namespace App\auth\user\libraries\guards;
 
 interface Guard
 {

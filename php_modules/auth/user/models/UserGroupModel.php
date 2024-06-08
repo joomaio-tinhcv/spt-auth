@@ -8,7 +8,7 @@
  * 
  */
 
-namespace DTM\user\models;
+namespace App\auth\user\models;
 
 use SPT\Container\Client as Base;
 use SPT\Traits\ErrorString;

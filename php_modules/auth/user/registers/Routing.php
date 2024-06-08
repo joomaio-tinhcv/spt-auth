@@ -1,6 +1,6 @@
 <?php
 
-namespace DTM\user\registers;
+namespace App\auth\user\registers;
 
 use SPT\Application\IApp;
 

@@ -1,5 +1,5 @@
 <?php
-namespace DTM\user\registers;
+namespace App\auth\user\registers;
 
 use SPT\Application\IApp;
 use SPT\Response;
@@ -15,7 +15,7 @@ class Dispatcher
             $app->plgLoad('permission', 'CheckSession');
         }
         
-        $controller = 'DTM\user\controllers\\'. $cName;
+        $controller = 'App\auth\user\controllers\\'. $cName;
         if(!class_exists($controller))
         {
             $app->raiseError('Invalid controller '. $cName);

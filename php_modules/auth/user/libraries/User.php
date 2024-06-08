@@ -1,10 +1,10 @@
 <?php
 
-namespace DTM\user\libraries;
+namespace App\auth\user\libraries;
 
-use DTM\user\libraries\guards\Guard;
-use DTM\user\libraries\guards\SessionGuard;
-use DTM\user\libraries\providers\UserProvider;
+use App\auth\user\libraries\guards\Guard;
+use App\auth\user\libraries\guards\SessionGuard;
+use App\auth\user\libraries\providers\UserProvider;
 use SPT\User\SPT\User as UserBase;
 use SPT\Traits\ErrorString;
 

@@ -1,8 +1,8 @@
 <?php
 
-namespace DTM\user\libraries\providers;
+namespace App\auth\user\libraries\providers;
 
-use DTM\user\libraries\providers\ProviderBase;
+use App\auth\user\libraries\providers\ProviderBase;
 use SPT\Storage\DB\Entity;
 
 class UserProvider implements ProviderBase

@@ -1,8 +1,8 @@
 <?php
 
-namespace DTM\user\libraries\guards;
+namespace App\auth\user\libraries\guards;
 
-use DTM\user\libraries\providers\ProviderBase;
+use App\auth\user\libraries\providers\ProviderBase;
 use SPT\User\SPT\User as UserBase;
 use SPT\Traits\ErrorString;
 use SPT\Session\Instance as Session;

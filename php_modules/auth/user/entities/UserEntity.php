@@ -8,7 +8,7 @@
  * 
  */
 
-namespace DTM\user\entities;
+namespace App\auth\user\entities;
 
 use SPT\Storage\DB\Entity;
 

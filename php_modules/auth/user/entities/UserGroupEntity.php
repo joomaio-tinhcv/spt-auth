@@ -8,7 +8,7 @@
  * 
  */
 
-namespace DTM\user\entities;
+namespace App\auth\user\entities;
 
 use SPT\User\SPT\UserGroupEntity as ParentEntity;
 
