@@ -9,7 +9,7 @@
  * 
  */
 
-namespace App\auth\user\libraries;
+namespace App\auth\core\libraries;
  
 use SPT\Router\ArrayEndpoint as Router;
 use SPT\Request\Base as Request;
