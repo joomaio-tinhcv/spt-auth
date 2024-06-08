@@ -1,5 +1,8 @@
 # spt-auth
 
+# Start
+1. copy config.sample -> config và update database.php
+2. Import file demo.sql
 
 # Thực nghiệm với authentication 
 1. Login session bằng username và password

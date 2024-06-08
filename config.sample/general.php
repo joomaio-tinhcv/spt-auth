@@ -9,7 +9,7 @@ return [
     'redirectAfterLogin' => '',
     'homeEndpoint' => [
         'fnc' => [
-            'get' => 'pnote.pnote.dashboard'
+            'get' => 'user.user.list'
         ],
     ],
 ];
