@@ -93,4 +93,19 @@ class PostPolicy extends Base
 
         return false;
     }
+
+    public function create($post_id)
+    {
+        if(!$post_id)
+        {
+            return true;
+        }
+
+        $post = $this->PostEntity->findByPK($post_id);
+
+        if(!$post)
+        {
+            return false;
+        }
+    }
 }

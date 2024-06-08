@@ -39,10 +39,10 @@ class Routing
                         'delete' => ['post_manager']
                     ],
                     'post_policy' => [
-                        'get' => ['detail'],
-                        'post' => ['create'],
-                        'put' => ['update'],
-                        'delete' => ['delete'],
+                        'get' => 'detail',
+                        'post' => 'update',
+                        'put' => 'update',
+                        'delete' => 'delete',
                     ]
                 ],
             ],

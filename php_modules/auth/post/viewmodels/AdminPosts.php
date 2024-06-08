@@ -51,6 +51,19 @@ class AdminPosts extends ViewModel
             $total = 0;
         }
 
+        $post_manger = $this->permission->can('access_key', 'post_manager');
+        foreach($result as &$item)
+        {
+            if($post_manger)
+            {
+                $item['allow'] = true;
+            }
+            else
+            {
+                $item['allow'] = $this->permission->can('post_policy', 'update', $item['id']);
+            }
+        }
+
         $limit = $limit == 0 ? $total : $limit;
         $list   = new Listing($result, $total, $limit, $this->getColumns());
         return [
