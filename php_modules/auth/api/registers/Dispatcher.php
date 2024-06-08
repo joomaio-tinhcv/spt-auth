@@ -14,8 +14,9 @@ class Dispatcher
         $user->setGuard('api');
         if (!$user->get('id'))
         {
-            $app->raiseError('Invalid controller '. $cName);
+            $app->raiseError('Unauthorized', 401);
         }
+        
         $controller = 'App\auth\api\controllers\\'. $cName;
         if(!class_exists($controller))
         {

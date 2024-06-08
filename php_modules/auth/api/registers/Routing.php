@@ -13,11 +13,13 @@ class Routing
                 'fnc' => [
                     'get' => 'api.api.list',
                 ],
+                'format' => 'json',
             ],
             'api/user' => [
                 'fnc' => [
                     'get' => 'api.api.detail',
                 ],
+                'format' => 'json',
                 'parameters' => ['id'],
             ],
         ];

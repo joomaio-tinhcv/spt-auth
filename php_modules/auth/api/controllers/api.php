@@ -7,29 +7,28 @@ class api extends ControllerMVVM
 {
     public function detail()
     {
-        
         $urlVars = $this->request->get('urlVars');
         $id = (int) $urlVars['id'];
 
-        $existUser = $this->UserEntity->findByPK($id);
-        if(!empty($id) && !$existUser) 
+        $user = $this->UserEntity->findByPK($id);
+        if($user)
         {
-            $this->session->set('flashMsg', "Invalid user");
-            return $this->app->redirect(
-                $this->router->url('users')
-            );
+            $this->set('user', $user);
         }
-
-        $this->app->set('layout', 'backend.user.form');
-        $this->app->set('page', 'backend');
-        $this->app->set('format', 'html');
+        else
+        {
+            $this->set('message', 'Invalid user');
+        }
+        $this->set('status', $user ? 'success' : 'fail');
+        return;
     }
 
     public function list()
     {
-        $this->app->set('page', 'backend');
-        $this->app->set('format', 'html');
-        $this->app->set('layout', 'backend.user.list');
+        $users = $this->UserEntity->list(0,0);
+        $this->set('status', 'success');
+        $this->set('users', $users);
+        return;
     }
 
 }
