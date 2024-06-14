@@ -10,12 +10,6 @@ class Dispatcher
     {
         $cName = $app->get('controller');
         $fName = $app->get('function');
-        $user = $app->getContainer()->get('user');
-        $user->setGuard('api');
-        if (!$user->get('id') && $fName != 'login')
-        {
-            $app->raiseError('Unauthorized', 401);
-        }
         
         $controller = 'App\auth\google_auth\controllers\\'. $cName;
         if(!class_exists($controller))

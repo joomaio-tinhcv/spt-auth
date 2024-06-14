@@ -5,31 +5,40 @@ namespace App\auth\google_auth\models;
 use SPT\Container\Client as Base; 
 use SPT\Traits\ErrorString;
 
-class UserApiModel extends Base 
+class GoogleAuthModel extends Base 
 { 
-    use ErrorString; 
-
-    public function login($username, $passowrd)
+    // Write your code here
+    public function getUrlLogin()
     {
-        if (!$passowrd || !$passowrd)
+        $client = $this->initGoogle();
+        if ($client)
         {
-            $this->error = 'Username and Password invalid.';
+            $url = $client->createAuthUrl();
+
+            return $url;
+        }
+        
+        return '';
+    }
+
+    public function initGoogle()
+    {
+        $client = new \Google_Client();
+        $google_client_id = $this->config->google_client_id ?? '';
+        $google_client_secrect = $this->config->$this->google_client_secrect ?? '';
+        if ($google_client_id && $google_client_secrect)
+        {
+            $client->setClientId($google_client_id);
+            $client->setClientSecret($google_client_secrect);
+            $client->setRedirectUri($this->router->url('google_auth'));
+            $client->addScope("email");
+            $client->addScope("profile");
+                
+        }
+        else{
             return false;
         }
-
-        $result = $this->user->login(
-            $username,
-            $passowrd
-        );
-
-        if ( $result )
-        {
-            return $result;
-        }
-        else
-        {
-            $this->error = 'Username or Password Incorrect';
-            return false;
-        }
+        
+        return $client;
     }
 }

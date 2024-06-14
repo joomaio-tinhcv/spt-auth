@@ -5,47 +5,48 @@ use SPT\Web\ControllerMVVM;
 
 class google extends ControllerMVVM 
 {
-    public function detail()
-    {
-        $urlVars = $this->request->get('urlVars');
-        $id = (int) $urlVars['id'];
-
-        $user = $this->UserEntity->findByPK($id);
-        if($user)
-        {
-            $this->set('user', $user);
-        }
-        else
-        {
-            $this->set('message', 'Invalid user');
-        }
-        $this->set('status', $user ? 'success' : 'fail');
-        return;
-    }
-
-    public function list()
-    {
-        $users = $this->UserEntity->list(0,0);
-        $this->set('status', 'success');
-        $this->set('users', $users);
-        return;
-    }
-
     public function login()
     {
-        $try = $this->UserApiModel->login(
-            $this->request->post->get('username', '', 'string'),
-            $this->request->post->get('password', '', 'string')
-        );
-
-        if(!$try)
+        $client = $this->GoogleModel->initGoogle();
+        $code = $this->request->get->get('code', '', 'string');
+        if ($code) 
         {
-            $this->set('error',  'Invalid Username or Password');
+            $token = $client->fetchAccessTokenWithAuthCode($code);
+            if (!isset($token['access_token']))
+            {
+                $this->session->set('flashMsg', 'Login Fail');
+                return $this->app->redirect($this->router->url('login'));
+            }
+            $client->setAccessToken($token['access_token']);
+     
+            // get profile info
+            $google_oauth = new \Google_Service_Oauth2($client);
+            $google_account_info = $google_oauth->userinfo->get();
+            $email =  $google_account_info->email;
+            $name =  $google_account_info->name;
+
+           /**
+            * CHECK EMAIL AND NAME IN DATABASE
+            */
+            $check = $this->UserEntity->findOne(['email' => $email]);
+            if (!$check)
+            {
+                $this->session->set('flashMsg', 'Login failed, email not registered');
+                return $this->app->redirect($this->router->url('login'));
+            }
+            else
+            {
+                $user_id = $check['id'];
+            }
+
+            $user = $this->UserEntity->findOne(['id' => $user_id]);
+            $storate = $this->user->getContext();
+            $this->session->set($storate, $user);
+            
+            return $this->app->redirect($this->router->url(''));
         }
         
-        $this->set('status', $try ? 'success' : 'fail');
-        $this->set('access_token', $try ? $try : '');
-        return;
+        return $this->app->redirect($this->router->url('login'));
     }
 
 }
