@@ -51,6 +51,10 @@ class UserEntity extends Entity
                     'type' => 'varchar',
                     'limit' => 255,
                 ],
+                'token_expired' => [
+                    'type' => 'datetime',
+                    'null' => 'YES',
+                ],
                 'created_at' => [
                     'type' => 'datetime',
                     'null' => 'YES',

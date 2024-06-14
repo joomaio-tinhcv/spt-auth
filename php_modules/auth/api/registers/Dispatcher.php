@@ -12,7 +12,7 @@ class Dispatcher
         $fName = $app->get('function');
         $user = $app->getContainer()->get('user');
         $user->setGuard('api');
-        if (!$user->get('id'))
+        if (!$user->get('id') && $fName != 'login')
         {
             $app->raiseError('Unauthorized', 401);
         }

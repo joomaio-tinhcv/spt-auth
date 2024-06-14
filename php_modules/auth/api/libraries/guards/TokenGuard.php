@@ -74,7 +74,7 @@ class TokenGuard implements Guard
             $access_token = $this->request->post->get('access_token', '', 'string');
         }
 
-        $this->user = $this->provider->retrieveByCredentials(['access_token' => $access_token]);
+        $this->user = $this->provider->retrieveByToken($id, $access_token);
         if($this->user)
         {
             unset($this->user['password']);
@@ -83,6 +83,25 @@ class TokenGuard implements Guard
         return $this->user;
     }
 
+    /**
+     * Get the currently authenticated user.
+     */
+    public function login($username, $password)
+    {
+        $user = $this->provider->retrieveByCredentials(['username' => $username,'password' => $password]);
+        if($user)
+        {
+            unset($user['password']);
+            $this->user = $user;
+
+            // generate string and expired time
+            $token = $this->provider->generateToken($this->user['id']);
+            
+            return $token;
+        }
+
+        return false;
+    }
 
     /**
      * Get the ID for the currently authenticated user.

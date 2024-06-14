@@ -31,4 +31,21 @@ class api extends ControllerMVVM
         return;
     }
 
+    public function login()
+    {
+        $try = $this->UserApiModel->login(
+            $this->request->post->get('username', '', 'string'),
+            $this->request->post->get('password', '', 'string')
+        );
+
+        if(!$try)
+        {
+            $this->set('error',  'Invalid Username or Password');
+        }
+        
+        $this->set('status', $try ? 'success' : 'fail');
+        $this->set('access_token', $try ? $try : '');
+        return;
+    }
+
 }

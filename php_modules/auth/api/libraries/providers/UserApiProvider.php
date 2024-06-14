@@ -31,10 +31,21 @@ class UserApiProvider implements ProviderBase
      * @param  mixed  $id
      * @param  string  $token
      */
-    public function retrieveByToken($id, $token)
+    public function retrieveByToken($id, $access_token)
     {
-        // todo
+        $user = $this->entity->findOne(['access_token' => md5($access_token)]);
+        if($user)
+        {
+            if (strtotime('now') > strtotime($user['token_expired']))
+            {
+                return false;
+            }
+        }
+        
+        return $user;
     }
+
+    
 
     /**
      * Retrieve a user by the given credentials.
@@ -43,9 +54,43 @@ class UserApiProvider implements ProviderBase
      */
     public function retrieveByCredentials(array $credentials)
     {
-        $access_token = $credentials['access_token'] ?? '';
-        $user = $this->entity->findOne(['access_token' => $access_token]);
+        $username = $credentials['username'] ?? '';
+        $password = $credentials['password'] ?? '';
+        $user = $this->entity->findOne(['username' => $username, 'password'=> md5($password)]);
         
         return $user;
+    }
+
+
+    public function generateToken($id)
+    {
+        $token = $this->generateRandomString();
+        $find = $this->entity->findByPK($id);
+        if(!$find)
+        {
+            return false;
+        }
+
+        $find['access_token'] = md5($token);
+        $find['token_expired'] = date('y-m-d h:i:s', strtotime('now +5 minutes'));
+        $find['password'] = '';
+        $try = $this->entity->update($find);
+
+        return $try ? $token : false;
+    }
+
+    public function generateRandomString($length = 15) 
+    {
+        $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+        $charactersLength = strlen($characters);
+        $randomString = '';
+        
+        for ($i = 0; $i < $length; $i++) 
+        {
+            $randomIndex = random_int(0, $charactersLength - 1);
+            $randomString .= $characters[$randomIndex];
+        }
+        
+        return $randomString;
     }
 }

@@ -9,6 +9,12 @@ class Routing
     public static function registerEndpoints()
     {
         return [
+            'api/auth' => [
+                'fnc' => [
+                    'post' => 'api.api.login',
+                ],
+                'format' => 'json',
+            ],
             'api/users' => [
                 'fnc' => [
                     'get' => 'api.api.list',
