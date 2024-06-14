@@ -25,7 +25,7 @@ class GoogleAuthModel extends Base
     {
         $client = new \Google_Client();
         $google_client_id = $this->config->google_client_id ?? '';
-        $google_client_secrect = $this->config->$this->google_client_secrect ?? '';
+        $google_client_secrect = $this->config->google_client_secrect ?? '';
         if ($google_client_id && $google_client_secrect)
         {
             $client->setClientId($google_client_id);

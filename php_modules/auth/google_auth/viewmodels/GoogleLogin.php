@@ -1,17 +1,10 @@
 <?php
-/**
- * SPT software - ViewModel
- * 
- * @project: https://github.com/smpleader/spt-boilerplate
- * @author: Pham Minh - smpleader
- * @description: Just a basic viewmodel
- * 
- */
-namespace App\auth\core\viewmodels; 
+
+namespace App\auth\google_auth\viewmodels; 
 
 use SPT\Web\ViewModel;
 
-class GoolgeLogin extends ViewModel
+class GoogleLogin extends ViewModel
 {
     public static function register()
     {
