@@ -19,6 +19,7 @@
 												<input type="checkbox" id="select_all">
 											</th>
 											<th>Title</th>
+											<th>Created by</th>
 											<th>Created at</th>
 									</thead>
 									<tbody>

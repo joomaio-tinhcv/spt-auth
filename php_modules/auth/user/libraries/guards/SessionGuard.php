@@ -66,7 +66,10 @@ class SessionGuard implements Guard
         if (! is_null($id)) 
         {
             $this->user = $this->provider->retrieveById($id);
-            unset($this->user['password']);
+            if($this->user)
+            {
+                unset($this->user['password']);
+            }
         }
 
         return $this->user;
@@ -127,5 +130,16 @@ class SessionGuard implements Guard
     {
         $this->user = $user;
         return;
+    }
+
+    public function logout()
+    {
+        if(!$this->user())
+        {
+            return false;
+        }
+
+        $this->session->set($this->getName(), ''); 
+        return true;
     }
 }

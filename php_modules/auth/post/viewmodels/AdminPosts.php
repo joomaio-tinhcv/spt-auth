@@ -35,7 +35,11 @@ class AdminPosts extends ViewModel
         }
         
         $where = [];
-
+        $post_manger = $this->permission->can('access_key', 'post_manager');
+        if(!$post_manger)
+        {
+            $where[] = "(created_by LIKE ". $this->user->get('id').")";
+        }
         if (!empty($search)) {
             $where[] = "(`title` LIKE '%" . $search . "%') OR (`description` LIKE '%" . $search . "%')";
         }
@@ -50,20 +54,11 @@ class AdminPosts extends ViewModel
             $result = [];
             $total = 0;
         }
-
-        $post_manger = $this->permission->can('access_key', 'post_manager');
         foreach($result as &$item)
         {
-            if($post_manger)
-            {
-                $item['allow'] = true;
-            }
-            else
-            {
-                $item['allow'] = $this->permission->can('post_policy', 'update', $item['id']);
-            }
+            $user = $this->UserEntity->findByPK($item['created_by']);
+            $item['created_by'] = $user ? $user['name'] : '';
         }
-
         $limit = $limit == 0 ? $total : $limit;
         $list   = new Listing($result, $total, $limit, $this->getColumns());
         return [
