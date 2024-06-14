@@ -1,6 +1,6 @@
 <?php
 
-namespace App\auth\oauth2\models;
+namespace App\auth\google_auth\models;
 
 use SPT\Container\Client as Base; 
 use SPT\Traits\ErrorString;

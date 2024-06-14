@@ -1,9 +1,9 @@
-<?php namespace App\auth\oauth2\controllers;
+<?php namespace App\auth\google_auth\controllers;
 
 use SPT\Response;
 use SPT\Web\ControllerMVVM;
 
-class api extends ControllerMVVM 
+class google extends ControllerMVVM 
 {
     public function detail()
     {

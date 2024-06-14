@@ -1,5 +1,5 @@
 <?php
-namespace App\auth\oauth2\registers;
+namespace App\auth\google_auth\registers;
 
 use SPT\Application\IApp;
 

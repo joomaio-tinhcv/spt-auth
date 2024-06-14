@@ -1,5 +1,5 @@
 <?php
-namespace App\auth\oauth2\registers;
+namespace App\auth\google_auth\registers;
 
 use SPT\Application\IApp;
 use SPT\Response;
@@ -17,7 +17,7 @@ class Dispatcher
             $app->raiseError('Unauthorized', 401);
         }
         
-        $controller = 'App\auth\oauth2\controllers\\'. $cName;
+        $controller = 'App\auth\google_auth\controllers\\'. $cName;
         if(!class_exists($controller))
         {
             $app->raiseError('Invalid controller '. $cName);
