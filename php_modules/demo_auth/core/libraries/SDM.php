@@ -22,8 +22,8 @@ use SPT\Session\PhpSession;
 use SPT\Session\DatabaseSession;
 use SPT\Session\DatabaseSessionEntity;
 use SPT\User\Instance as UserInstance;
-use App\demo_auth\user\libraries\User as UserAdapter;
-use App\demo_auth\user\entities\UserEntity;
+use App\demo_auth\demo_session_base\libraries\User as UserAdapter;
+use App\demo_auth\demo_session_base\entities\UserEntity;
 
 use SPT\Application\Web as Base;
 use SPT\Application\Configuration;
