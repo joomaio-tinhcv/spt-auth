@@ -10,10 +10,6 @@ class Dispatcher
     {
         $cName = $app->get('controller');
         $fName = $app->get('function');
-        if( $cName != 'user' || !in_array($fName, ['gate', 'login']))
-        {
-            $app->plgLoad('permission', 'CheckSession');
-        }
         
         $controller = 'App\demo_auth\demo_session_base\controllers\\'. $cName;
         if(!class_exists($controller))

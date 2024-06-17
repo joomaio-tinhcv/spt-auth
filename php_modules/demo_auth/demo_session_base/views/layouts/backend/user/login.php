@@ -33,7 +33,6 @@
                                         <a href="<?php echo $this->link_google_auth ?>"  class="btn btn-lg btn-primary form-control form-control-lg border-0">Login With Google</a>
                                     </div>
                                     <?php endif; ?>
-                                    <?php echo $this->renderWidget('google_auth::google_login'); ?>
                                 </form>
                             </div>
                         </div>

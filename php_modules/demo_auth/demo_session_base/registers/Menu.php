@@ -13,8 +13,8 @@ class Menu
         $path_current = $router->get('actualPath');
         $permission = $container->exists('permission') ? $container->get('permission') : null;
 
-        $allow_user = $permission ? $permission->can('access_key', ['user_manager', 'user_read']) : true;
-        $allow_usergroup = $permission ? $permission->can('access_key', ['usergroup_manager', 'usergroup_read']) : true;
+        $allow_user = true; //$permission ? $permission->can('access_key', ['user_manager', 'user_read']) : true;
+        $allow_usergroup = true; // $permission ? $permission->can('access_key', ['usergroup_manager', 'usergroup_read']) : true;
         
         $menu_user = [];
         if ($allow_user || $allow_usergroup)

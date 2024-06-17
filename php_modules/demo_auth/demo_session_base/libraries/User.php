@@ -62,7 +62,7 @@ class User extends UserBase
         return ;
     }
 
-    public function extendGuard($key, Guard $guard)
+    public function registerGuard($key, Guard $guard)
     {
         if(!isset($this->guards[$key]))
         {
@@ -96,30 +96,4 @@ class User extends UserBase
         return ;
     }
 
-    public function can(string $gate, ... $params)
-    {
-        if(!isset($this->gates[$gate]))
-        {
-            return false;
-        }
-
-        $config = $this->gates[$gate];
-
-        return true;
-    }
-
-    public function registerGates(string $gate, string $class, string $fnc)
-    {
-        if(is_null($this->gates))
-        {
-            $this->gates = [];
-        }
-
-        $this->gates[$gate] = [
-            'class' => $class,
-            'fnc' => $fnc,
-        ];
-
-        return true;
-    }
 }
