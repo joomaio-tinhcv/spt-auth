@@ -7,7 +7,7 @@ use SPT\User\SPT\User as UserBase;
 use SPT\Traits\ErrorString;
 use SPT\Session\Instance as Session;
 
-class SessionGuard implements Guard
+class SessionGuard implements GuardBase
 {
     protected $user;
     protected $name;

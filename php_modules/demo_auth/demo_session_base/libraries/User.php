@@ -2,7 +2,7 @@
 
 namespace App\demo_auth\demo_session_base\libraries;
 
-use App\demo_auth\demo_session_base\libraries\guards\Guard;
+use App\demo_auth\demo_session_base\libraries\guards\GuardBase;
 use App\demo_auth\demo_session_base\libraries\guards\SessionGuard;
 use App\demo_auth\demo_session_base\libraries\providers\UserProvider;
 use SPT\User\SPT\User as UserBase;
@@ -62,7 +62,7 @@ class User extends UserBase
         return ;
     }
 
-    public function registerGuard($key, Guard $guard)
+    public function registerGuard($key, GuardBase $guard)
     {
         if(!isset($this->guards[$key]))
         {

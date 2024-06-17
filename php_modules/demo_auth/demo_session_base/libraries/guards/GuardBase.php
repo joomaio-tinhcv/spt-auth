@@ -2,7 +2,7 @@
 
 namespace App\demo_auth\demo_session_base\libraries\guards;
 
-interface Guard
+interface GuardBase
 {
     /**
      * Determine if the current user is authenticated.

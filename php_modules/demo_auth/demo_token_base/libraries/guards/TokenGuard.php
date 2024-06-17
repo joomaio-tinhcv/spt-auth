@@ -3,13 +3,13 @@
 namespace App\demo_auth\demo_token_base\libraries\guards;
 
 use App\demo_auth\demo_session_base\libraries\providers\ProviderBase;
-use App\demo_auth\demo_session_base\libraries\guards\Guard;
+use App\demo_auth\demo_session_base\libraries\guards\GuardBase;
 use SPT\User\SPT\User as UserBase;
 use SPT\Traits\ErrorString;
 use SPT\Session\Instance as Session;
 use SPT\Request\Base as Request;
 
-class TokenGuard implements Guard
+class TokenGuard implements GuardBase
 {
     protected $user;
     protected $name;
