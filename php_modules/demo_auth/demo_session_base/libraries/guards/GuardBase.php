@@ -39,13 +39,6 @@ interface GuardBase
     public function validate(array $credentials = []);
 
     /**
-     * Determine if the guard has a user instance.
-     *
-     * @return bool
-     */
-    public function hasUser();
-
-    /**
      * Set the current user.
      *
      */
