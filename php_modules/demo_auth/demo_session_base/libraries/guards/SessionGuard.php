@@ -113,16 +113,6 @@ class SessionGuard implements GuardBase
     }
 
     /**
-     * Determine if the guard has a user instance.
-     *
-     * @return bool
-     */
-    public function hasUser()
-    {
-        // Todo
-    }
-
-    /**
      * Set the current user.
      *
      */
