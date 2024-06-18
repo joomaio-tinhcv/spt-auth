@@ -185,15 +185,88 @@ class SDM extends Base
         }
     }
 
-    protected function routing()
+    public function execute(string $themePath = '')
     {
-        // TODO: load cache
-        // TODO: load table
-        $router = $this->router;
-        $this->plgManager->call('all')->run('routing', 'registerEndpoints', false, function ($endpoints) use ($router){
-            $router->import($endpoints);
-        });
+        $this->routing();
 
-        $this->plgManager->call('all')->run('routing', 'afterRouting');
+        if( $this->cf('homeEndpoint') )
+        {
+            $this->router->import([
+                '' => $this->cf('homeEndpoint')
+            ]);
+        }
+        
+        if($themePath) $this->set('themePath', $themePath);
+
+        try{
+
+            $try = $this->router->parse($this->request);
+            if(false === $try)
+            {
+                if($this->config->pageNotFound)
+                {
+                    $try = [$this->config->pageNotFound, []];
+                }
+                else
+                {
+                    $this->raiseError('Invalid request', 500);
+                }
+            }
+
+            list($todo, $params) = $try;
+            $try = explode('.', $todo);
+            
+            if(count($try) !== 3)
+            {
+                $this->raiseError('Not correct routing', 500);
+            } 
+
+            list($pluginName, $controller, $function) = $try;
+
+            $plugin = $this->plgManager->getDetail($pluginName);
+
+            if(false === $plugin)
+            {
+                $this->raiseError('Invalid plugin '.$pluginName, 500);
+            }
+            
+            if(count($params))
+            {
+                foreach($params as $key => $value)
+                {
+                    $this->set($key, $value);
+                }
+            }
+
+            // support if this is home - special deals
+            if($this->router->get('isHome'))
+            {
+                $this->plgManager->call('all')->run('Routing', 'isHome');
+            }
+
+            $this->set('mainPlugin', $plugin);
+            $this->set('controller', $controller);
+            $this->set('function', $function);
+
+            $this->plgManager->call('all')->run('Authentication', 'onLoad');
+
+            return $this->plgManager->call($pluginName)->run('Dispatcher', 'dispatch', true);
+
+        }
+        catch (\Exception $e) 
+        {
+            $this->raiseError('[Error] ' . $e->getMessage(), 500);
+        }
+    }
+
+    public function mainLoad(string $event, string $function, $callback = null, bool $getResult = false)
+    {
+        $plugin = $this->get('mainPlugin', false);
+        if(false === $plugin)
+        {
+            throw new \Exception('Method childLoad can not be called before Routing.'); 
+        }
+
+        return $this->plgManager->call($plugin['name'])->run($event, $function, false, $callback, $getResult);
     }
 }

@@ -8,9 +8,19 @@ use App\demo_auth\demo_session_base\libraries\providers\UserProvider;
 
 class Authentication
 {
-    public static function setGuard(IApp $app)
+    public static function onLoad(IApp $app)
     {
+        // load all registerGuard
+        $app->plgLoad('authentication', 'registerGuard');
+
+        // run authentication in active plugin
+        $plugin = $app->get('mainPlugin', '');
+        if($plugin)
+        {
+            $app->mainLoad('authentication', 'setGuard');
+        }
         
+        // run check permission in request
     }
 
     public static function registerGuard(IApp $app)

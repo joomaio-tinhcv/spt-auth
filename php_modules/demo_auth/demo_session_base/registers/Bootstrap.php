@@ -9,7 +9,6 @@ class Bootstrap
 {
     public static function initialize( IApp $app)
     {
-        // load guard in all plugin
-        $app->plgLoad('authentication', 'registerGuard');
+        // int
     }
 }
