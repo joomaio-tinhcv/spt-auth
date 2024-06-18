@@ -3,8 +3,6 @@
 namespace App\demo_auth\demo_session_base\libraries;
 
 use App\demo_auth\demo_session_base\libraries\guards\GuardBase;
-use App\demo_auth\demo_session_base\libraries\guards\SessionGuard;
-use App\demo_auth\demo_session_base\libraries\providers\UserProvider;
 use SPT\User\SPT\User as UserBase;
 use SPT\Traits\ErrorString;
 
@@ -18,14 +16,7 @@ class User extends UserBase
     {
         parent::init($options);
 
-        if (!isset($options['guards']))
-        {
-            $provider = new UserProvider($this->entity);
-            $this->guards = [
-                'web' => new SessionGuard('web', $provider, $this->session)
-            ];
-        }
-        elseif(is_array($options['guards']))
+        if(isset($options['guards']) && is_array($options['guards']))
         {
             $this->guards = [];
             foreach($options['guards'] as $key => $item)
