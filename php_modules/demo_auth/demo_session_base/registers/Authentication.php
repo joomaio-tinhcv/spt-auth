@@ -21,13 +21,14 @@ class Authentication
         }
         
         // run check permission in request
-        $user = $app->getContainer()->get('user');
-        $try = $user->canRequest($app->getContainer()->get('request'));
-        if(!$try)
-        {
-            return $app->raiseError('Unauthorized', 401);
+        // Todo
+        // $user = $app->getContainer()->get('user');
+        // $try = $user->can($app->getContainer()->get('request'));
+        // if(!$try)
+        // {
+        //     return $app->raiseError('Unauthorized', 401);
         
-        }
+        // }
 
         return true;
     }
