@@ -87,4 +87,8 @@ class User extends UserBase
         return ;
     }
 
+    public function canRequest($request)
+    {
+        return true;
+    }
 }
