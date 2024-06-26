@@ -17,7 +17,7 @@ class UserApiModel extends Base
             return false;
         }
 
-        $result = $this->user->login(
+        $result = $this->authentication->login(
             $username,
             $passowrd
         );

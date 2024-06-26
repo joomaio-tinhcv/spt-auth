@@ -7,7 +7,7 @@ class user extends ControllerMVVM
 {
     public function gate()
     {
-        if( $this->user->get('id') )
+        if( $this->authentication->get('id') )
         {
             return $this->app->redirect(
                 $this->router->url('users')
@@ -21,7 +21,7 @@ class user extends ControllerMVVM
     public function login()
     {
         $redirectAfterLogin = $this->config->redirectAfterLogin ? $this->config->redirectAfterLogin : ''; 
-        if ($this->user->get('id'))
+        if ($this->authentication->get('id'))
         {
             return $this->app->redirect(
                 $this->router->url($redirectAfterLogin)
@@ -74,7 +74,7 @@ class user extends ControllerMVVM
 
     public function saveProfile()
     {
-        $id = $this->user->get('id'); 
+        $id = $this->authentication->get('id'); 
         $save_close = $this->request->post->get('save_close', '', 'string');
        
         $password = $this->request->post->get('password', '');
@@ -85,7 +85,7 @@ class user extends ControllerMVVM
             'username' => $this->request->post->get('username', '', 'string'),
             'email' => $this->request->post->get('email', '', 'string'),
             'status' => 1,
-            'modified_by' => $this->user->get('id'),
+            'modified_by' => $this->authentication->get('id'),
             'modified_at' => date('Y-m-d H:i:s'),
             'id' => $id,
         ];
@@ -126,7 +126,7 @@ class user extends ControllerMVVM
 
     public function logout()
     {
-        $this->user->logout();
+        $this->authentication->logout();
 
         return $this->app->redirect(
             $this->router->url('login')
@@ -146,9 +146,9 @@ class user extends ControllerMVVM
             'password' => $this->request->post->get('password', ''),
             'confirm_password' => $this->request->post->get('confirm_password', ''),
             'status' => $this->request->post->get('status', 0),
-            'created_by' => $this->user->get('id'),
+            'created_by' => $this->authentication->get('id'),
             'created_at' => date('Y-m-d H:i:s'),
-            'modified_by' => $this->user->get('id'),
+            'modified_by' => $this->authentication->get('id'),
             'modified_at' => date('Y-m-d H:i:s')
         ];
         $newId = $this->UserModel->add($data);
@@ -183,7 +183,7 @@ class user extends ControllerMVVM
 
         if(is_numeric($ids) && $ids)
         {
-            if ($ids == $this->user->get('id') && (!in_array('user_manager', $access) || !in_array('usergroup_manager', $access)))
+            if ($ids == $this->authentication->get('id') && (!in_array('user_manager', $access) || !in_array('usergroup_manager', $access)))
             {
                 $this->session->set('flashMsg', 'Error: You can\'t delete your access group');
                 return $this->app->redirect(
@@ -196,7 +196,7 @@ class user extends ControllerMVVM
                 'username' => $this->request->post->get('username', '' , 'string'),
                 'email' => $this->request->post->get('email', '', 'string'),
                 'status' => $this->request->post->get('status', 0),
-                'modified_by' => $this->user->get('id'),
+                'modified_by' => $this->authentication->get('id'),
                 'modified_at' => date('Y-m-d H:i:s'),
                 'id' => $ids,
             ];
@@ -237,7 +237,7 @@ class user extends ControllerMVVM
         {
             foreach($userID as $id)
             {
-                if( $id == $this->user->get('id') )
+                if( $id == $this->authentication->get('id') )
                 {
                     $this->session->set('flashMsg', 'Error: You can\'t delete yourself.');
                     return $this->app->redirect(
@@ -254,7 +254,7 @@ class user extends ControllerMVVM
         }
         elseif( is_numeric($userID) )
         {
-            if( $userID === $this->user->get('id') )
+            if( $userID === $this->authentication->get('id') )
             {
                 $this->session->set('flashMsg', 'Error: You can\'t delete yourself.');
                 return $this->app->redirect(

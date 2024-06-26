@@ -96,7 +96,7 @@ class UserGroupModel extends Base
 
     public function checkAccessGroup($id, $access = [])
     {
-        $groups = $this->UserEntity->getGroups($this->user->get('id'));
+        $groups = $this->UserEntity->getGroups($this->authentication->get('id'));
         $check = false;
         $user_groups = [];
 

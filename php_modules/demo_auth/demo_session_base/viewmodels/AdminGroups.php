@@ -35,7 +35,7 @@ class AdminGroups extends ViewModel
         $GroupEntity = $this->container->get('GroupEntity');
         $UserModel = $this->container->get('UserModel');
         $session = $this->container->get('session');
-        $user = $this->container->get('user');
+        $user = $this->container->get('authentication');
         $filter = $this->filter()['form'];
 
         $limit  = $filter->getField('limit')->value;

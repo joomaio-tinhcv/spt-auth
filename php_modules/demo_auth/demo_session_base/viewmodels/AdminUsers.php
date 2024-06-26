@@ -30,7 +30,7 @@ class AdminUsers extends ViewModel
     {
         $filter = $this->filter()['form'];
         $request = $this->container->get('request');
-        $user = $this->container->get('user');
+        $user = $this->container->get('authentication');
         $UserEntity = $this->container->get('UserEntity');
         $UserGroupEntity = $this->container->get('UserGroupEntity');
         $session = $this->container->get('session');

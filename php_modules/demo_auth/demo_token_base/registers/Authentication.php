@@ -11,9 +11,9 @@ class Authentication
     public static function setGuard(IApp $app)
     {
         $fName = $app->get('function');
-        $user = $app->getContainer()->get('user');
-        $user->setGuard('api');
-        if (!$user->get('id') && $fName != 'login')
+        $authentication = $app->getContainer()->get('authentication');
+        $authentication->setGuard('api');
+        if (!$authentication->get('id') && $fName != 'login')
         {
             return $app->raiseError('Unauthorized', 401);
         }
@@ -24,10 +24,10 @@ class Authentication
     public static function registerGuard(IApp $app)
     {
         $container = $app->getContainer();
-        $user = $container->get('user');
+        $authentication = $container->get('authentication');
         $provider = new UserApiProvider($container->get('UserEntity'));
         
-        $user->registerGuard('api', new TokenGuard('api', $provider, $container->get('session'), $container->get('request')));
+        $authentication->registerGuard('api', new TokenGuard('api', $provider, $container->get('session'), $container->get('request')));
 
         return true;
     }

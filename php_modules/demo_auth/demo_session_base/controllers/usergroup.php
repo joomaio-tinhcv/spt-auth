@@ -35,9 +35,9 @@ class usergroup extends ControllerMVVM
             'description' => $this->request->post->get('description', '', 'string'),
             'access' => json_encode($this->request->post->get('access', [], 'array')),
             'status' => $status,
-            'created_by' => $this->user->get('id'),
+            'created_by' => $this->authentication->get('id'),
             'created_at' => date('Y-m-d H:i:s'),
-            'modified_by' => $this->user->get('id'),
+            'modified_by' => $this->authentication->get('id'),
             'modified_at' => date('Y-m-d H:i:s')
         ];
         $newId =  $this->UserGroupModel->add($data);
@@ -83,7 +83,7 @@ class usergroup extends ControllerMVVM
                 'description' => $this->request->post->get('description', '', 'string'),
                 'access' => json_encode($this->request->post->get('access', [], 'array')),
                 'status' => $status,
-                'modified_by' => $this->user->get('id'),
+                'modified_by' => $this->authentication->get('id'),
                 'modified_at' => date('Y-m-d H:i:s'),
                 'id' => $sth,
             ];

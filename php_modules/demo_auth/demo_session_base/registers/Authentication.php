@@ -12,9 +12,9 @@ class Authentication
     {
         // load all registerGuard
         $app->plgLoad('authentication', 'registerGuard');
-
         // run authentication in active plugin
         $plugin = $app->get('mainPlugin', '');
+        
         if($plugin)
         {
             $app->mainLoad('authentication', 'setGuard');
@@ -36,11 +36,10 @@ class Authentication
     public static function registerGuard(IApp $app)
     {
         $container = $app->getContainer();
-        $user = $container->get('user');
+        $authentication = $container->get('authentication');
         $provider = new UserProvider($container->get('UserEntity'));
         
-        $user->registerGuard('web', new SessionGuard('web', $provider, $container->get('session')));
-
+        $authentication->registerGuard('web', new SessionGuard('web', $provider, $container->get('session')));
         return true;
     }
 }

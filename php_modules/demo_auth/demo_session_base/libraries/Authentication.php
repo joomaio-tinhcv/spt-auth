@@ -2,73 +2,86 @@
 
 namespace App\demo_auth\demo_session_base\libraries;
 
-use App\demo_auth\demo_session_base\libraries\AuthenticationBase;
+use App\demo_auth\demo_session_base\libraries\guards\GuardBase;
+use SPT\Container\Client as Base; 
 
-class Authentication implements AuthenticationBase
+class Authentication extends Base
 {
-    /**
-     * Determine if the current user is authenticated.
-     *
-     * @return bool
-     */
-    public function check()
-    {
+    private $guards;
+    private $guard_active; 
 
+    public function getGuard()
+    {
+        if(!$this->guard_active)
+        {
+            $this->guard_active = 'web';
+        }
+
+        return isset($this->guards[$this->guard_active]) ? $this->guards[$this->guard_active] : null;
+    }
+
+    public function setGuard($guard)
+    {
+        $this->guard_active = $guard;
+        $guard = $this->getGuard();
+        $this->data = !is_null($guard) ? $guard->user() : null;
+        return ;
+    }
+
+    public function registerGuard($key, GuardBase $guard)
+    {
+        if(!isset($this->guards[$key]))
+        {
+            $this->guards[$key] = $guard;
+        }
+
+        return true;
     }
 
     /**
-     * Determine if the current user is a guest.
+     * Login with supplied username and password
+     * TODO apply middleware or authentication
      *
-     * @return bool
-     */
-    public function guest()
+     * @param string   $username 
+     * @param string   $password 
+     * 
+     * @return bool|User
+     */ 
+    public function login(string $username, string $password)
     {
-
+        $guard = $this->getGuard();
+        $try = $guard ? $guard->login($username, $password) : false;
+        return $try;
     }
 
-    /**
-     * Get the currently authenticated user.
-     */
     public function user()
     {
-
+        $guard = $this->getGuard();
+        $try = $guard ? $guard->user() : false;
+        return $try;
     }
 
-    /**
-     * Get the currently authenticated user.
-     */
-    public function login(array $credentials = [])
+    public function logout()
     {
-
+        $guard = $this->getGuard();
+        $try = $guard ? $guard->logout() : parent::logout();
+        
+        return ;
     }
 
-    /**
-     * Get the ID for the currently authenticated user.
-     *
-     * @return int|string|null
-     */
-    public function id()
+    public function can()
     {
-
+        return true;
     }
 
-    /**
-     * Validate a user's credentials.
-     *
-     * @param  array  $credentials
-     * @return bool
-     */
-    public function validate(array $credentials = [])
+    public function get($key, $default = null)
     {
+        $user = $this->user();
+        if($user && isset($user[$key]))
+        {
+            return $user[$key];
+        }
 
-    }
-
-    /**
-     * Set the current user.
-     *
-     */
-    public function setUser($user)
-    {
-
+        return $default;
     }
 }

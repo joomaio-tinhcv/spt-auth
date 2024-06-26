@@ -168,7 +168,7 @@ class AdminUser extends ViewModel
 
     public function profile()
     {
-        $user = $this->container->get('user');
+        $user = $this->container->get('authentication');
         $UserEntity = $this->container->get('UserEntity');
         $router = $this->container->get('router');
         $id = $user->get('id');
