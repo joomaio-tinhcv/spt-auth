@@ -77,7 +77,7 @@ class SDM extends Base
 
         $this->prepareDb();
         $this->prepareSession();
-        // $this->prepareUser();
+        $this->prepareAuth();
         $this->loadClasses();
     }
 
@@ -107,15 +107,11 @@ class SDM extends Base
         ));
     }
 
-    // private function prepareUser()
-    // {   
-    //     $user = new UserInstance( new UserAdapter() ); 
-    //     $user->init([
-    //         'session' => $this->container->get('session'),
-    //         'entity' => new  UserEntity($this->container->get('query'))
-    //     ]);
-    //     $this->container->share('user', $user, true);
-    // }
+    private function prepareAuth()
+    {   
+        $auth = new UserInstance( new UserAdapter() ); 
+        $this->container->share('auth', $user, true);
+    }
 
     private function loadClasses()
     {
